@@ -1,5 +1,23 @@
 # gxde-network-utils
 
+---
+
+## Qt6迁移 | Qt6 Migration
+已经迁移到Qt6：
+
+Already migrated to Qt6: 
+
+* **包名 · Package name**: `gxde-network-utils-qt6`
+* **二进制库名 · Library name**: `libgxde-network-utils-qt6`
+* **PKGCONFIG**: `gxde-network-utils-qt6.pc`
+* **INCLUDE**: `/usr/include/libgxde-network-utils-qt6/`
+
+在编译之前，请先编译并安装由 https://gitee.com/GXDE-OS/dframework-dbus-qt6 提供的依赖`DFrameworkDBusQt6`（从源码编译是因为在写这个文档的是很这个库还没进APT源）
+
+Before you complie this one, please first compile+install the package `DFrameworkDBusQt6` provided by https://gitee.com/GXDE-OS/dframework-dbus-qt6 The reason that we need you to complie this dependency from source is that while I am writing this document, that library is not in the APT source yet.
+
+---
+
 gxde-network-utils 是对 dde-daemon 的网络模块所提供的 DBus 数据的一个再封装。由于原始 DBus 数据中存在许多信息杂糅、经常要处理字符串及 Json 数据解析等问题，再加上网络模块涉及有设备信息、代理信息、网络连接信息等许多信息的处理与聚集关联，单一只靠 DBus 已经无法高效、合理的处理它们。同时由于 DBus 调用固有的延迟及低可靠性等问题，也需要有一个中间层来作为缓冲。
 
 # 基本模块
