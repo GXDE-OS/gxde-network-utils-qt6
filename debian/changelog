@@ -1,3 +1,9 @@
+gxde-network-utils (6.0.0-gxde1) UNRELEASED; urgency=medium
+
+  * 迁移到Qt6
+
+ -- CharOfString <markus_verify@126.com@qq.com>  Fri, 26 Jun 2026 00:09:19 +0800
+
 gxde-network-utils (2:1.0.1) UNRELEASED; urgency=medium
 
   * dde-network-utils=>gxde-network-utils
