@@ -3,3 +3,21 @@ build*/
 .vscode/*
 bin/
 *.qm
+
+# Qt build artifacts
+.qmake.stash
+Makefile
+*.o
+moc_*.cpp
+moc_predefs.h
+
+# Generated libraries and pkgconfig
+libgxde-network-utils-qt6.so*
+*.prl
+pkgconfig/
+
+# Agents
+.claude/*
+.codex/*
+.gemini/*
+.qwen/*

@@ -1,10 +1,19 @@
 QT       -= gui
 QT       += dbus network
 
-TARGET = gxde-network-utils
+TARGET = gxde-network-utils-qt6
 TEMPLATE = lib
-CONFIG += link_pkgconfig c++11 create_pc create_prl no_install_prl no_keywords
-PKGCONFIG      += dframeworkdbus
+CONFIG += link_pkgconfig c++17 create_pc create_prl no_install_prl no_keywords
+
+# Qt6 version of dframeworkdbus (libdframeworkdbus-qt6)
+DFRAMEWORK_PATH = $$(DFRAMEWORK_PATH)
+isEmpty(DFRAMEWORK_PATH) {
+    INCLUDEPATH += /usr/include/libdframeworkdbus-qt6-6.0
+} else {
+    INCLUDEPATH += $$DFRAMEWORK_PATH/include/libdframeworkdbus-qt6-6.0
+    LIBS += -L$$DFRAMEWORK_PATH/lib
+}
+LIBS += -ldframeworkdbus-qt6
 
 DEFINES += DDENETWORKUTILS_LIBRARY
 DEFINES += QT_DEPRECATED_WARNINGS
@@ -43,15 +52,15 @@ CONFIG(release, debug|release) {
 }
 
 target.path = $$PREFIX/lib
-includes.path = $$PREFIX/include/libddenetworkutils
+includes.path = $$PREFIX/include/libgxde-network-utils-qt6
 
-qm_files.path = $${PREFIX}/share/gxde-network-utils/translations/
+qm_files.path = $${PREFIX}/share/gxde-network-utils-qt6/translations/
 qm_files.files = translations/*.qm
 
-TRANSLATIONS = translations/dde-control-center.ts
+TRANSLATIONS = translations/gxde-network-utils-qt6.ts
 
-QMAKE_PKGCONFIG_NAME = libddenetworkutils
-QMAKE_PKGCONFIG_DESCRIPTION = libddenetworkutils
+QMAKE_PKGCONFIG_NAME = libgxde-network-utils-qt6
+QMAKE_PKGCONFIG_DESCRIPTION = GXDE Network Utils Qt6 library
 QMAKE_PKGCONFIG_INCDIR = $$includes.path
 QMAKE_PKGCONFIG_LIBDIR = $$target.path
 QMAKE_PKGCONFIG_DESTDIR = pkgconfig

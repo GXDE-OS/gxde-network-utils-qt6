@@ -1,34 +1,32 @@
-Source: gxde-network-utils
+Source: gxde-network-utils-qt6
 Section: libs
 Priority: optional
 Maintainer: gfdgd xi <3025613752@qq.com>
 Build-Depends:
  debhelper (>= 9),
- libgxframeworkdbus-dev (>= 1.0.2),
+ libdframeworkdbus-qt6-dev (>= 6.0.0),
  pkg-config,
- qt5-qmake,
- qttools5-dev-tools,
- qtchooser,
- qtbase5-dev,
+ qt6-base-dev,
+ qt6-tools-dev-tools,
 Standards-Version: 3.9.8
 Homepage: https://gitee.com/GXDE-OS/gxde-network-utils
 
-Package: libgxde-network-utils
-Provides: libdde-network-utils
-Conflicts: libdde-network-utils (>> 2:1.0.0-2)
-Replaces: libdde-network-utils
+Package: libgxde-network-utils-qt6
+Provides: libdde-network-utils-qt6
+Conflicts: libdde-network-utils-qt6
+Replaces: libdde-network-utils-qt6
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: GXDE network utils
- GXDE network utils.
+Description: GXDE network utils (Qt6)
+ GXDE network utils built with Qt6.
 
-Package: libgxde-network-utils-dev
-Provides: libdde-network-utils-dev
-Replaces: libdde-network-utils-dev
-Conflicts: libdde-network-utils-dev
+Package: libgxde-network-utils-qt6-dev
+Provides: libdde-network-utils-qt6-dev
+Conflicts: libdde-network-utils-qt6-dev
+Replaces: libdde-network-utils-qt6-dev
 Architecture: any
 Section: libdevel
 Depends:
- libgxde-network-utils, ${misc:Depends}
+ libgxde-network-utils-qt6, ${misc:Depends}
 Description: GXDE network utils dev
- GXDE network utils dev.
+ GXDE network utils development files built with Qt6.
