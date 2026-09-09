@@ -1,8 +1,12 @@
-gxde-network-utils-qt6 (6.0.0-gxde1) UNRELEASED; urgency=medium
+gxde-network-utils-qt6 (6.0.1) UNRELEASED; urgency=medium
 
+  [ CharOfString ]
   * 迁移到Qt6
 
- -- CharOfString <markus_verify@126.com>  Fri, 26 Jun 2026 00:09:19 +0800
+  [ gfdgd_xi ]
+  * 新增定期重新检测网络是否可用的功能
+
+ -- gfdgd_xi <3025613752@qq.com>  Wed, 09 Sep 2026 19:53:57 +0800
 
 gxde-network-utils (2:1.0.1) UNRELEASED; urgency=medium
 

@@ -55,6 +55,7 @@ NetworkModel::NetworkModel(QObject *parent)
     , m_lastSecretDevice(nullptr)
     , m_connectivityChecker(new ConnectivityChecker)
     , m_connectivityCheckThread(new QThread(this))
+    , m_checking(false)
 {
     connect(this, &NetworkModel::needCheckConnectivitySecondary,
             m_connectivityChecker, &ConnectivityChecker::startCheck);
@@ -605,17 +606,42 @@ void NetworkModel::onConnectivityChanged(int connectivity)
     // if the new connectivity state from NetworkManager is not Full,
     // check it again use our urls
     if (m_Connectivity != Full) {
-        if (!m_connectivityCheckThread->isRunning()) {
-            m_connectivityCheckThread->start();
-        }
-        Q_EMIT needCheckConnectivitySecondary();
+        requestSecondaryCheck();
     }
 
     Q_EMIT connectivityChanged(m_Connectivity);
 }
 
+void NetworkModel::checkConnectivity()
+{
+    // Always re-check the real internet connectivity, even when NetworkManager
+    // reports Full (its own check url may be whitelisted while the rest of the
+    // internet still needs authentication, e.g. a captive portal). The checker
+    // thread must be running before emitting the signal.
+    requestSecondaryCheck();
+}
+
+void NetworkModel::requestSecondaryCheck()
+{
+    // Avoid stacking up blocking checks on the checker thread, an in-progress
+    // check already covers the latest connectivity state.
+    if (m_checking) {
+        return;
+    }
+
+    m_checking = true;
+
+    if (!m_connectivityCheckThread->isRunning()) {
+        m_connectivityCheckThread->start();
+    }
+
+    Q_EMIT needCheckConnectivitySecondary();
+}
+
 void NetworkModel::onConnectivitySecondaryCheckFinished(bool connectivity)
 {
+    m_checking = false;
+
     m_Connectivity = connectivity ? Full : NoConnectivity;
     Q_EMIT connectivityChanged(m_Connectivity);
 }

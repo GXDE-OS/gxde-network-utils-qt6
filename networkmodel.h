@@ -75,6 +75,12 @@ public:
 
     static Connectivity connectivity() { return m_Connectivity; }
 
+    // Periodically trigger a secondary connectivity check (ping external urls)
+    // so that the real internet status can be refreshed even if NetworkManager
+    // does not emit a ConnectivityChanged signal (e.g. after passing a captive
+    // portal / web authentication).
+    void checkConnectivity();
+
     const ProxyConfig proxy(const QString &type) const { return m_proxies[type]; }
     const QString autoProxy() const { return m_autoProxy; }
     const QString proxyMethod() const { return m_proxyMethod; }
@@ -154,11 +160,13 @@ private:
     bool containsDevice(const QString &devPath) const;
     NetworkDevice *device(const QString &devPath) const;
     void updateWiredConnInfo();
+    void requestSecondaryCheck();
 
 private:
     NetworkDevice *m_lastSecretDevice;
     ConnectivityChecker *m_connectivityChecker;
     QThread *m_connectivityCheckThread;
+    bool m_checking;
 
     bool m_vpnEnabled;
     bool m_appProxyExist;
