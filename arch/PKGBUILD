@@ -1,0 +1,39 @@
+# Maintainer: CharOfString <root@charofstring.cc>
+pkgname=gxde-network-utils-qt6-git
+pkgver=6.0.1
+pkgrel=1
+pkgdesc='GXDE network utils library (Qt6)'
+arch=('x86_64' 'aarch64')
+url="https://github.com/GXDE-OS/gxde-network-utils-qt6"
+license=('GPL-3.0-or-later')
+depends=('dframework-dbus-qt6-git' 'qt6-base' 'libgcc' 'libstdc++' 'glibc')
+makedepends=('git' 'qt6-tools')
+provides=("gxde-network-utils-qt6=$pkgver")
+conflicts=('gxde-network-utils-qt6')
+source=()
+sha512sums=()
+
+# 直接使用 PKGBUILD 所在的 git 仓库作为源码 ・ Build from the git checkout this PKGBUILD lives in.
+_srcroot() {
+  git -C "$startdir" rev-parse --show-toplevel
+}
+
+build() {
+  # translate_generation.sh 按当前目录查找 translations/*.ts，影子构建时找不到，先在源码目录生成 .qm
+  # translate_generation.sh looks for translations/*.ts in the current
+  # directory, which a shadow build lacks, so generate the .qm files in the
+  # source tree first.
+  (cd "$(_srcroot)" && bash translate_generation.sh)
+  mkdir -p build
+  cd build
+  qmake6 "$(_srcroot)/dde-network-utils.pro" \
+    PREFIX=/usr \
+    QMAKE_CFLAGS_RELEASE="$CFLAGS" \
+    QMAKE_CXXFLAGS_RELEASE="$CXXFLAGS" \
+    QMAKE_LFLAGS_RELEASE="$LDFLAGS"
+  make
+}
+
+package() {
+  make -C build INSTALL_ROOT="$pkgdir" install
+}
