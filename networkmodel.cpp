@@ -61,12 +61,20 @@ NetworkModel::NetworkModel(QObject *parent)
             m_connectivityChecker, &ConnectivityChecker::startCheck);
     connect(m_connectivityChecker, &ConnectivityChecker::checkFinished,
             this, &NetworkModel::onConnectivitySecondaryCheckFinished);
+    connect(m_connectivityCheckThread, &QThread::finished,
+            m_connectivityChecker, &QObject::deleteLater);
 
     m_connectivityChecker->moveToThread(m_connectivityCheckThread);
 }
 
 NetworkModel::~NetworkModel()
 {
+    if (m_connectivityCheckThread->isRunning()) {
+        m_connectivityCheckThread->quit();
+        m_connectivityCheckThread->wait();
+    } else {
+        delete m_connectivityChecker;
+    }
     qDeleteAll(m_devices);
 }
 
