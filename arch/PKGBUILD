@@ -1,15 +1,16 @@
 # Maintainer: CharOfString <root@charofstring.cc>
-pkgname=gxde-network-utils-qt6-git
+pkgname=gxde-network-utils-qt6
 pkgver=6.0.1
 pkgrel=1
 pkgdesc='GXDE network utils library (Qt6)'
 arch=('x86_64' 'aarch64')
 url="https://github.com/GXDE-OS/gxde-network-utils-qt6"
 license=('GPL-3.0-or-later')
-depends=('dframework-dbus-qt6-git' 'qt6-base' 'libgcc' 'libstdc++' 'glibc')
+depends=('dframework-dbus-qt6' 'qt6-base' 'libgcc' 'libstdc++' 'glibc')
 makedepends=('git' 'qt6-tools')
-provides=("gxde-network-utils-qt6=$pkgver")
-conflicts=('gxde-network-utils-qt6')
+provides=("gxde-network-utils-qt6-git=$pkgver")
+conflicts=('gxde-network-utils-qt6-git')
+replaces=('gxde-network-utils-qt6-git')
 source=()
 sha512sums=()
 
